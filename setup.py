@@ -24,9 +24,9 @@ setuptools.setup(name='sphinx_rtd_theme_ext_color_contrast',
       author='Richard Darst',
       #author_email='',
       packages=['sphinx_rtd_theme_ext_color_contrast'],           # packages
-      #package_data={
-      #    "xxx": ['_static/*'],
-      #    },
+      package_data={
+          "sphinx_rtd_theme_ext_color_contrast": ['_static/*'],
+          },
       #py_modules=["nbscript"],   # single modules
       keywords='sphinx-extension',
       install_requires=requirements,
