@@ -34,7 +34,7 @@ setuptools.setup(name='sphinx_rtd_theme_ext_color_contrast',
       classifiers=[
         "Programming Language :: Python :: 3",
         "Development Status :: 4 - Beta",
-        "Framework :: Sphinx"
+        "Framework :: Sphinx",
         "Framework :: Sphinx :: Extension",
         "Operating System :: OS Independent",
     ],
