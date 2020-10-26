@@ -24,6 +24,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Test with pytest
+    - name: Install package
       run: |
-        pytest
+        pip install .
+        python3 -c 'import sphinx_rtd_theme_ext_color_contrast'
+    # There are no current tests
+    #- name: Test with pytest
+    #  run: |
+    #    pytest
