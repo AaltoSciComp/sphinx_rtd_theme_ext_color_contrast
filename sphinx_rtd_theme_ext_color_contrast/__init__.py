@@ -2,7 +2,7 @@ import os
 
 import sphinx
 
-from .version import __version__
+from ._version import __version__
 
 def init_static_path(app):
     static_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '_static'))
