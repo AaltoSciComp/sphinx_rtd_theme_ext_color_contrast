@@ -15,3 +15,8 @@ def setup(app):
         app.add_css_file('sphinx_rtd_theme_ext_color_contrast.css')
     else:
         app.add_stylesheet('sphinx_rtd_theme_ext_color_contrast.css')
+        return {
+            'version': __version__,
+            'parallel_read_safe': True,
+            'parallel_write_safe': True,
+        }
