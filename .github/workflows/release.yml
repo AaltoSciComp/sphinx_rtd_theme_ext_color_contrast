@@ -26,10 +26,10 @@ name: PyPI release
 on: [push]
 
 jobs:
-  pypi:
-    runs-on: ubuntu-latest
+  build:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
 
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
 
@@ -49,32 +49,32 @@ jobs:
 
     # Verify that the git tag has the same version as the python
     # project version.
-    - name: Check that versions match
-      run: |
-        pip install .
-        # If MOD_NAME not defined, infer it from the directory name
-        if [ -z "$MOD_NAME" ] ; then
-            # strip leading directories
-            MOD_NAME=${PWD##*/}
-            # replace '-' with '_'
-            MOD_NAME=${MOD_NAME//-/_}
-        fi
-        # Find the versions
-        MOD_VERSION=$(python -c "import $MOD_NAME ; print($MOD_NAME.__version__)")
-        echo $MOD_VERSION
-        TAG_VERSION=${{ github.ref }}
-        echo $TAG_VERSION
-        TAG_VERSION=${TAG_VERSION##refs/tags/}   # remove leading 'refs/tags/'
-        # Do the actual check
-        if [ "$MOD_VERSION" != "$TAG_VERSION" ] ; then
-          echo "::error::Module version ($MOD_VERSION) des not match tag version ($TAG_VERSION)"
-          exit 1
-        fi
+    - uses: rkdarst/action-verify-python-version@main
+
+    - uses: actions/upload-artifact@master
+      if: ${{ github.event_name == 'push' }}
+      with:
+        name: dist-directory
+        path: dist/
+
+
+  upload:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+    permissions:
+      id-token: write  # for trusted publishing
+    steps:
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: dist-directory
+        path: dist/
 
     - name: Publish on PyPI
       if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
-      uses: pypa/gh-action-pypi-publish@v1.4.1
-      with:
-        user: __token__
-        password: ${{ secrets.pypi_password }}
+      uses: pypa/gh-action-pypi-publish@release/v1
+      #with:
+        #user: __token__
+        #password: ${{ secrets.pypi_password }}
         #repository_url: https://test.pypi.org/legacy/
