@@ -66,7 +66,7 @@ jobs:
       id-token: write  # for trusted publishing
     steps:
 
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@master
       with:
         name: dist-directory
         path: dist/
