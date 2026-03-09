@@ -40,3 +40,11 @@ Admonition colors
   theme uses.
 
 Make the sidebar background darker
+
+
+Other changes
+-------------
+Workaround for
+https://github.com/executablebooks/sphinx-togglebutton/issues/75 .
+This isn't exactly "color contrast" but this is the repo we use for
+sphinx-rtd-theme fixups, so it can go here for now.
